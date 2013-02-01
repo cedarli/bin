@@ -1,0 +1,47 @@
+#!/bin/sh
+echo "Please input path csv file:\c"
+read path
+CSVFILE=$path
+TD_STR=''
+
+#this function create a <td> block
+create_td()
+{
+#echo $1
+TD_STR=`echo $1 | awk 'BEGIN{FS=","}{i=1; while(i<=NF) {print "<td>"$i"</td>";i++}}'`
+}
+#this function create a row html script(<tr>block).
+create_tr()
+{
+create_td "$1"
+echo "<tr>\n$TD_STR\n</tr>\n" >> $path.html
+}
+#create html script head
+create_html_head()
+{
+echo "<html>\n<body>\n<h1>$CSVFILE</h1>\n" >>$path.html
+}
+#create html script end
+create_html_end()
+{
+echo "</body></html>" >>$path.html
+}
+create_table_head()
+{
+echo "<table border="1">\n" >>$path.html
+}
+create_table_end()
+{
+echo "</table>\n" >>$path.html
+}
+create_html_head
+create_table_head
+while read LINE
+do
+# echo "$LINE"
+create_tr "$LINE"
+done < $CSVFILE
+create_table_end
+create_html_end
+
+

@@ -1,0 +1,33 @@
+#!/bin/sh
+#configuration absolate path for Froyo enviroment parameter
+drod=$HOME/workspace/src/Froyo/src
+drod_frameworks=$drod/frameworks/base
+oprofile=$drod/external/oprofile
+agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
+
+#clear old PATH
+export PATH=$CEDAR_LOGIN
+#setup enviroment jdk 1.5
+source /home/cedar/.cedar/java/jdk1.5022
+if [ -d "$drod" ] ; then
+    cd "$drod"
+    source build/envsetup.sh
+else
+    echo "Can not find directory $drod"
+fi
+
+# add new enviroment parameter
+export  PATH=$oprofile:$PATH
+export  PATH=$agcc:$PATH
+
+#change frameworks directory
+if [ $# = 1 ];then
+    if [ $1 == frameworks ];then
+        cd $drod
+        source build/envsetup.sh
+        cd $drod_frameworks
+    else
+        echo "director is not frameworks please check type error"
+    fi
+fi
+ls 

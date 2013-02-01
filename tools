@@ -1,0 +1,8 @@
+#! /bin/sh
+dir=$HOME/.$USER/local
+if [ -d "$dir" ] ; then
+    cd $dir
+else
+    echo "Can not find directory $dir"
+fi
+ls

@@ -1,0 +1,9 @@
+#! /bin/sh
+dir=/home/cedar/workspace/doc/share
+if [ -d "$dir" ] ; then
+    cd $dir
+    clear
+else
+    echo "Can not find directory $dir"
+fi
+ls 

@@ -1,0 +1,16 @@
+#! /bin/sh
+dir=$HOME/workspace/doc/android
+if [ $# = 1 ] ; then
+    if [ $1 = "ics" ] ; then 
+        dir=$dir/$1/bug
+    else 
+        if [ $1="froyo" ] ; then
+            dir=$dir/$1/bug/debug
+        fi
+    fi
+fi
+if [ -d "$dir" ] ; then
+    cd $dir
+else
+    echo "Can not find directory $dir"
+fi

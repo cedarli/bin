@@ -1,0 +1,32 @@
+#!/bin/sh
+#configuration ics enviroment parameter 
+drod=/home/cedar/workspace/src/ICS/src
+drod_framworks=$drod/frameworks/base
+oprofile=$drod/external/oprofile
+agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
+
+#clear old PATH
+export PATH=$CEDAR_LOGIN
+#setup enviroment jdk 1.6.0.38
+source /$HOME/.$USER/java/jdk1.6038
+if [ -d "$drod" ] ; then
+    cd "$drod"
+    source build/envsetup_infomax.sh
+else
+    echo "Can not find dirtory $drod"
+fi
+
+# add now enviroment oprofile and so on
+export  PATH=$oprofile:$PATH
+export  PATH=$agcc:$PATH
+# change dirtory to frameworks
+if [ $# == 1 ];then
+    if [ $1 == frameworks ]; then
+        cd $drod
+        source build/envsetup_infomax.sh
+        cd $drod_framworks
+    else
+        echo "dirtory is not frameworks please check type error"
+    fi
+fi
+ls 

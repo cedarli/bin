@@ -1,0 +1,39 @@
+#! /bin/sh
+#clear login enviroment PATH
+OLD_PATH=$PATH
+export PATH=$CEDAR_LOGIN
+#configuration enviroment path for crash
+drod_ics=/home/cedar/workspace/ICS/src
+drod_froyo=/home/cedar/workspace/Froyo/src
+tools=/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/
+crash_dir=/home/cedar/.cedar/local/crash
+boardv3=iM98xx_evb_v3
+#change directory to crash directory
+if [ -d "$crash_dir" ] ; then
+    clear
+    cd $crash_dir
+else
+    echo "Can not find directory $crash_dir"
+fi
+ls 
+#analysis crash.txt using stack script
+
+if [ "$1" = "ics" ] ; then
+    clear
+    echo "crash analysis ICS"
+    cd $drod_ics
+    source build/envsetup.sh
+    lunch
+    export PATH=$drod_ics$tools:$PATH
+    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v4_wvga/symbols $crash_dir/crash.txt
+elif [ "$1" = "froyo" ] ; then
+    clear
+    echo "crash analysis Froyo"
+    cd $drod_froyo
+    source build/envsetup.sh
+    lunch
+    #export PATH=$drod_froyo$tools:$PATH
+    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v3/symbols/ $crash_dir/crash.txt
+fi
+#restore OLD_PATH
+export PATH=$OLD_PATH
