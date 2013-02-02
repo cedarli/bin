@@ -8,7 +8,9 @@ agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
 #clear old PATH
 export PATH=$CEDAR_LOGIN
 #setup enviroment jdk 1.5
-source /home/cedar/.cedar/java/jdk1.5022
+if [ -d /$HOME/.$USER/java/jdk1.5022 ] ; then
+    source /$HOME/.$USER/java/jdk1.5022
+fi
 if [ -d "$drod" ] ; then
     cd "$drod"
     source build/envsetup.sh
