@@ -9,7 +9,6 @@ agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
 export PATH=$CEDAR_LOGIN
 #setup enviroment jdk 1.6.0.38
 if [ -f "/$HOME/.$USER/java/jdk1.6038" ] ; then
-    echo "test dirtory"
     source /$HOME/.$USER/java/jdk1.6038
 fi
 if [ -d "$drod" ] ; then
