@@ -1,8 +1,9 @@
 #! /bin/sh
-dir=$HOME/.$USER/bin
+dir=/home/cedar/workspace/doc
 if [ -d "$dir" ] ; then
     cd $dir
+    clear
 else
     echo "Can not find directory $dir"
 fi
-ls
+ls 

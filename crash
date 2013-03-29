@@ -33,7 +33,7 @@ elif [ "$1" = "froyo" ] ; then
     source build/envsetup.sh
     lunch
     #export PATH=$drod_froyo$tools:$PATH
-    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v3/symbols/ $crash_dir/crash.txt
+    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v3_wvga/symbols/ $crash_dir/crash.txt
 fi
 #restore OLD_PATH
 export PATH=$OLD_PATH

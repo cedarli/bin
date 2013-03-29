@@ -1,5 +1,5 @@
 #! /bin/sh
-dir=$HOME/.$USER/bin
+dir=$HOME/.$USER/local
 if [ -d "$dir" ] ; then
     cd $dir
 else
