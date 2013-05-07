@@ -1,1 +1,1 @@
-/home/cedar/.cedar/local/adt-bundle-linux-x86_64/sdk/platform-tools/adb
+/home/cedar/.cedar/local/adt_bundle_linux/sdk/platform-tools/adb
