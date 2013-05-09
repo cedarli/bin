@@ -1,0 +1,85 @@
+#!/bin/sh
+src=/home/cedar/workspace/src
+infomax_images=/src/infomax_images
+boot=boot.img_iM98xx_evb_
+system=system.img_iM98xx_evb_
+barebox=barebox.bin_im98xx
+recovery=recovery.img_iM98xx_evb_
+ps=ecos_ps4010_release.bin
+ramloader='ldr_app_rev56(01.01.09).bin'
+barebox_v3=_A9-624MHz-AHB-div2_XM-198MHz_A7-143MHz
+barebox_v4=_A9-806MHz-AHB-div3_XM-198MHz_A7-130MHz
+barebox_vn=""
+evb=
+wvga=_
+
+#select images location.
+if [ $1 = "ICS" ] || [ $1 = "Froyo" ] ;then
+    image=$src/$1/$infomax_images
+    cd $image
+    pwd
+else
+    echo "cann't find path for boot image please check"
+    return;
+fi
+
+#select partation for BSP12 or BSP13
+if [ $2 = "-1" ] || [ $2 = "-2" ] ;then
+    echo "partation select right."
+else
+    echo "partation error please check."
+    return;
+fi
+
+#select evb version
+if [ $3 = "-3" ] || [ $3 = "-4" ] ;then
+    if [ $3 = "-3" ] ;then
+        echo "burn v3 image at once."
+        evb='v3'
+        barebox_vn=$barebox_v3
+    else
+        echo "burn v4 image at once."
+        evb='v4'
+        barebox_vn=$barebox_v4
+    fi
+else
+    echo "evb version error please check."
+    return;
+fi
+
+#select image wvga or hvga.
+if [ $4 = "-w" ] || [ $4 = "-h" ] ;then
+    if [ $4 = "-w" ] ;then
+        echo "Burn wvga image."
+        wvga=$wvga'wvga'
+    else
+        echo "Burn hvga image."
+        wvga=""
+    fi
+else
+    echo "select image error please check."
+fi
+
+if [ $5 = "-b" ] ;then
+    boot=$boot$evb$wvga
+    echo "Burn boot:"$boot
+    usb-img-dl $2 -b BmR $boot $ps $ramloader
+    return;
+fi
+
+if [ $5 = "-s" ] ;then
+    system=$system$evb$wvga
+    echo "Burn system:"$system
+    usb-img-dl $2 -b smR $system $ps $ramloader
+    return;
+fi
+
+if [ $5 = "-a" ] ;then
+    echo "Burn all at once."
+    barebox=$barebox$evb$wvga$barebox_vn
+    boot=$boot$evb$wvga
+    system=$system$evb$wvga
+    recovery=$recovery$evb$wvga
+    usb-img-dl $2 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
+    return;
+fi
