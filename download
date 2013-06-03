@@ -13,6 +13,18 @@ barebox_vn=""
 evb=""
 wvga=_
 
+if [ $# -eq 2 ] ;then
+    if [ $2 = "-e" ] ;then
+        echo '\033[0;31;1m Erase user data.\033[0m'
+        usb-img-dl $1 -e u
+    else
+        echo '\033[0;31;1mPlease check parameter input.\033[0m'
+        echo '\033[0;31;1m>> BSP12 -1 or BSP13 -2.\033[0m'
+        echo '\033[0;31;1m>> '-e' for erase user data.\033[0m'
+    fi
+    return;
+fi
+fi
 if [ $# -ne 4 ] ;then
     echo '\033[0;31;1mPlease check parameter input.\033[0m'
     echo '\033[0;31;1m>> BSP12 -1 or BSP13 -2.\033[0m'
@@ -26,11 +38,9 @@ if [ $1 = "-1" ] || [ $1 = "-2" ] ;then
     if [ $1 = "-2" ] ;then
         image=$src/"ICS"/$infomax_images
         cd $image
-        pwd
     else
         image=$src/"Froyo"/$infomax_images
         cd $image
-        pwd
     fi
 else
     echo "partation error please check."
@@ -89,3 +99,5 @@ if [ $4 = "-a" ] ;then
     usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
     return;
 fi
+
+
