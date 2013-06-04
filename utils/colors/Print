@@ -1,0 +1,42 @@
+#!/bin/bash
+blackBegin='\033[0;30;1m'
+redBegin='\033[0;31;1m'
+greenBegin='\033[0;32;1m'
+yellowBegin='\033[0;33;1m'
+blueBegin='\033[0;34;1m'
+violetBegin='\033[0;35;1m'
+darkgreenBegin='\033[0;36;1m'
+whiteBegin='\033[0;37;1m'
+End='\033[0m'
+
+function printBlack(){
+    echo -e $blackBegin$1$End;
+}
+
+function printRed(){
+    echo -e $redBegin$1$End;
+}
+
+function printGreen(){
+    echo -e $greenBegin$1$End;
+}
+
+function printyellow(){
+    echo -e $yellowBegin$1$End;
+}
+
+function printBlue(){
+    echo -e $blueBegin$1$End;
+}
+
+function printViolet(){
+    echo -e $violetBegin$1$End;
+}
+
+function printDarkgreen(){
+    echo -e $darkgreenBegin$1$End;
+}
+
+function printWhite(){
+    echo -e $whiteBegin$1$End;
+}

@@ -1,8 +1,0 @@
-#! /bin/sh
-dir=/home/cedar/workspace/tools/utils
-if [ -d "$dir" ] ; then
-    cd $dir
-else
-    echo "Can not find directory $dir"
-fi
-ls

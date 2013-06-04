@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 src=/home/cedar/workspace/src
 infomax_images=/src/infomax_images
 boot=boot.img_iM98xx_evb_
@@ -9,29 +9,29 @@ ps=ecos_ps4010_release.bin
 ramloader='ldr_app_rev56(01.01.09).bin'
 barebox_v3=_A9-624MHz-AHB-div2_XM-198MHz_A7-143MHz
 barebox_v4=_A9-806MHz-AHB-div3_XM-198MHz_A7-130MHz
-barebox_vn=""
-evb=""
-wvga=_
+barebox_vn="";
+evb="";
+wvga=_;
 
+. /home/cedar/.cedar/bin/utils/colors/Print
 if [ $# -eq 2 ] ;then
     if [ $2 = "-e" ] ;then
-        echo '\033[0;31;1m Erase user data.\033[0m'
-        usb-img-dl $1 -e u
+        printRed "Erase user data.";
+        usb-img-dl $1 -e u;
     else
-        echo '\033[0;31;1mPlease check parameter input.\033[0m'
-        echo '\033[0;31;1m>> BSP12 -1 or BSP13 -2.\033[0m'
-        echo '\033[0;31;1m>> '-e' for erase user data.\033[0m'
+        printRed "Please check parameter input.";
+        printRed ">>BSP12 -1 or BSP13 -2";
+        printRed ">>'-e' for erase user data.";
     fi
-    return;
-fi
+    exit;
 fi
 if [ $# -ne 4 ] ;then
-    echo '\033[0;31;1mPlease check parameter input.\033[0m'
-    echo '\033[0;31;1m>> BSP12 -1 or BSP13 -2.\033[0m'
-    echo '\033[0;31;1m>> evbv3 -3 or evbv4 -4.\033[0m'
-    echo '\033[0;31;1m>> wvga  -w or hvga  -h.\033[0m'
-    echo '\033[0;31;1m>> boot -b system -s all -a.\033[0m'
-    return;
+    printRed "Please check parameter input.";
+    printRed "BSP12 -1 or BSP13 -2.";
+    printRed "evbv3 -3 or evbv4 -4.";
+    printRed "wvga -w or hvga -h.";
+    printRed "boot -b system -s all -a.";
+    exit;
 fi
 #select partation for BSP12 or BSP13
 if [ $1 = "-1" ] || [ $1 = "-2" ] ;then
@@ -43,8 +43,8 @@ if [ $1 = "-1" ] || [ $1 = "-2" ] ;then
         cd $image
     fi
 else
-    echo "partation error please check."
-    return;
+    printRed "partation error please check."
+    exit;
 fi
 
 #select evb version
@@ -60,7 +60,7 @@ if [ $2 = "-3" ] || [ $2 = "-4" ] ;then
     fi
 else
     echo "evb version error please check."
-    return;
+    exit;
 fi
 
 #select image wvga or hvga.
@@ -80,14 +80,14 @@ if [ $4 = "-b" ] ;then
     boot=$boot$evb$wvga
     echo "Burn boot:"$boot
     usb-img-dl $1 -b BmR $boot $ps $ramloader
-    return;
+    exit;
 fi
 
 if [ $4 = "-s" ] ;then
     system=$system$evb$wvga
     echo "Burn system:"$system
     usb-img-dl $1 -b smR $system $ps $ramloader
-    return;
+    exit;
 fi
 
 if [ $4 = "-a" ] ;then
@@ -97,7 +97,5 @@ if [ $4 = "-a" ] ;then
     system=$system$evb$wvga
     recovery=$recovery$evb$wvga
     usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
-    return;
+    exit;
 fi
-
-
