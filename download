@@ -50,48 +50,48 @@ fi
 #select evb version
 if [ $2 = "-3" ] || [ $2 = "-4" ] ;then
     if [ $2 = "-3" ] ;then
-        echo "burn v3 image at once."
+        printGreen "burn v3 image at once."
         evb='v3'
         barebox_vn=$barebox_v3
     else
-        echo "burn v4 image at once."
+        printGreen "burn v4 image at once."
         evb='v4'
         barebox_vn=$barebox_v4
     fi
 else
-    echo "evb version error please check."
+    printRed "evb version error please check."
     exit;
 fi
 
 #select image wvga or hvga.
 if [ $3 = "-w" ] || [ $3 = "-h" ] ;then
     if [ $3 = "-w" ] ;then
-        echo "Burn wvga image."
+        printGreen "Burn wvga image."
         wvga=$wvga'wvga'
     else
-        echo "Burn hvga image."
+        printGreen "Burn hvga image."
         wvga=""
     fi
 else
-    echo "select image error please check."
+    printGreen "select image error please check."
 fi
 
 if [ $4 = "-b" ] ;then
     boot=$boot$evb$wvga
-    echo "Burn boot:"$boot
+    printGreen "Burn boot:"$boot
     usb-img-dl $1 -b BmR $boot $ps $ramloader
     exit;
 fi
 
 if [ $4 = "-s" ] ;then
     system=$system$evb$wvga
-    echo "Burn system:"$system
+    printGreen "Burn system:"$system
     usb-img-dl $1 -b smR $system $ps $ramloader
     exit;
 fi
 
 if [ $4 = "-a" ] ;then
-    echo "Burn all at once."
+    printGreen "Burn all at once."
     barebox=$barebox$evb$wvga$barebox_vn
     boot=$boot$evb$wvga
     system=$system$evb$wvga
