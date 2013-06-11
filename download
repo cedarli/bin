@@ -50,11 +50,11 @@ fi
 #select evb version
 if [ $2 = "-3" ] || [ $2 = "-4" ] ;then
     if [ $2 = "-3" ] ;then
-        printGreen "burn v3 image at once."
+        printGreen "Burn v3 image at once."
         evb='v3'
         barebox_vn=$barebox_v3
     else
-        printGreen "burn v4 image at once."
+        printGreen "Burn v4 image at once."
         evb='v4'
         barebox_vn=$barebox_v4
     fi
