@@ -13,26 +13,9 @@ barebox_vn="";
 evb="";
 wvga=_;
 
-. /home/cedar/.cedar/bin/utils/colors/Print
-if [ $# -eq 2 ] ;then
-    if [ $2 = "-e" ] ;then
-        printRed "Erase user data.";
-        usb-img-dl $1 -e u;
-    else
-        printRed "Please check parameter input.";
-        printRed ">>BSP12 -1 or BSP13 -2";
-        printRed ">>'-e' for erase user data.";
-    fi
-    exit;
-fi
-if [ $# -ne 4 ] ;then
-    printRed "Please check parameter input.";
-    printRed "BSP12 -1 or BSP13 -2.";
-    printRed "evbv3 -3 or evbv4 -4.";
-    printRed "wvga -w or hvga -h.";
-    printRed "boot -b system -s all -a.";
-    exit;
-fi
+. utils/io/colors/Print
+
+
 #select partation for BSP12 or BSP13
 if [ $1 = "-1" ] || [ $1 = "-2" ] ;then
     if [ $1 = "-2" ] ;then
@@ -47,6 +30,31 @@ else
     exit;
 fi
 
+if [ $# -eq 2 ] ;then
+    if [ $2 = "-e" ] ;then
+        printRed "Erase user data.";
+        usb-img-dl $1 -e u;
+    else if [ $2 = "-A" ] ;then
+            printGreen "Erase all image";
+            usb-img-dl $1 -A;
+            usb-img-dl $1 -b mR $ps $ramloader
+            exit;
+        else
+            printRed "Please check parameter input.";
+            printRed ">>BSP12 -1 or BSP13 -2";
+            printRed ">>'-e' for erase user data.";
+    fi
+    fi
+    exit;
+fi
+if [ $# -ne 4 ] ;then
+    printRed "Please check parameter input.";
+    printRed "BSP12 -1 or BSP13 -2.";
+    printRed "evbv3 -3 or evbv4 -4.";
+    printRed "wvga -w or hvga -h.";
+    printRed "boot -b system -s all -a.";
+    exit;
+fi
 #select evb version
 if [ $2 = "-3" ] || [ $2 = "-4" ] ;then
     if [ $2 = "-3" ] ;then

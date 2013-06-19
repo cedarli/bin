@@ -1,8 +1,9 @@
 #! /bin/sh
+. utils/io/colors/Print
 dir=$HOME/.$USER/local/linux
 if [ -d "$dir" ] ; then
     cd $dir
 else
-    echo "Can not find directory $dir"
+    printRed "Can not find directory $dir"
 fi
 ls
