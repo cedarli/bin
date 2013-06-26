@@ -84,26 +84,23 @@ else
     printGreen "select image error please check."
 fi
 
-if [ $4 = "-b" ] ;then
-    boot=$boot$evb$wvga
-    printGreen "Burn boot:"$boot
-    usb-img-dl $1 -b BmR $boot $ps $ramloader
-    exit;
-fi
-
-if [ $4 = "-s" ] ;then
-    system=$system$evb$wvga
-    printGreen "Burn system:"$system
-    usb-img-dl $1 -b smR $system $ps $ramloader
-    exit;
-fi
-
-if [ $4 = "-a" ] ;then
-    printGreen "Burn all at once."
-    barebox=$barebox$evb$wvga$barebox_vn
-    boot=$boot$evb$wvga
-    system=$system$evb$wvga
-    recovery=$recovery$evb$wvga
-    usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
-    exit;
-fi
+case $4 in
+    "-b")
+        boot=$boot$evb$wvga
+        printGreen "Burn boot:"$boot
+        usb-img-dl $1 -b BmR $boot $ps $ramloader
+        ;;
+    "-s")
+        system=$system$evb$wvga
+        printGreen "Burn system:"$system
+        usb-img-dl $1 -b smR $system $ps $ramloader
+        ;;
+    "-a")
+        printGreen "Burn all at once."
+        barebox=$barebox$evb$wvga$barebox_vn
+        boot=$boot$evb$wvga
+        system=$system$evb$wvga
+        recovery=$recovery$evb$wvga
+        usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
+        ;;
+esac
