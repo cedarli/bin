@@ -1,5 +1,5 @@
 #!/bin/sh
-#configuration ics enviroment parameter 
+#configuration jelly enviroment parameter 
 drod=/home/cedar/workspace/src/Jelly/src
 drod_framworks=$drod/frameworks/base
 oprofile=$drod/external/oprofile
@@ -31,4 +31,4 @@ if [ $# == 1 ];then
         echo "dirtory is not frameworks please check type error"
     fi
 fi
-ls 
+ls
