@@ -13,7 +13,7 @@ barebox_vn="";
 evb="";
 wvga=_;
 
-. ./utils/io/colors/Print
+. $HOME/.$USER/bin/utils/io/colors/Print
 
 
 #select partation for BSP12 or BSP13
@@ -101,6 +101,7 @@ case $4 in
         boot=$boot$evb$wvga
         system=$system$evb$wvga
         recovery=$recovery$evb$wvga
+        usb-img-dl $1 -A
         usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
         ;;
 esac

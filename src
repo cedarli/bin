@@ -1,0 +1,8 @@
+#! /bin/sh
+dir=$HOME/workspace/src/infomax
+if [ -d "$dir" ] ; then
+    cd $dir
+else
+    echo "Can not find directory $dir"
+fi
+ls 

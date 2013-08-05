@@ -3,8 +3,8 @@
 OLD_PATH=$PATH
 export PATH=$CEDAR_LOGIN
 #configuration enviroment path for crash
-drod_ics=/home/cedar/workspace/ICS/src
-drod_froyo=/home/cedar/workspace/Froyo/src
+drod_ics=/home/cedar/workspace/srcICS/src
+drod_froyo=/home/cedar/workspace/src/Froyo/src
 tools=/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/
 crash_dir=/home/cedar/.cedar/local/crash
 boardv3=iM98xx_evb_v3
@@ -32,8 +32,9 @@ elif [ "$1" = "froyo" ] ; then
     cd $drod_froyo
     source build/envsetup.sh
     lunch
-    #export PATH=$drod_froyo$tools:$PATH
-    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v3_wvga/symbols/ $crash_dir/crash.txt
+    export PATH=$drod_froyo$tools:$PATH
+    echo $PATH
+    $crash_dir/stack --symbols-dir=out/target/product/iM98xx_evb_v3/symbols/ $crash_dir/crash.txt
 fi
 #restore OLD_PATH
 export PATH=$OLD_PATH
