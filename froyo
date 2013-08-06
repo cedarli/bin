@@ -32,4 +32,3 @@ if [ $# = 1 ];then
         echo "director is not frameworks please check type error"
     fi
 fi
-ls 
