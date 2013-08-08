@@ -37,7 +37,7 @@ if [ $# -eq 2 ] ;then
     else if [ $2 = "-A" ] ;then
             printGreen "Erase all image";
             usb-img-dl $1 -A;
-            usb-img-dl $1 -b mR $ps $ramloader
+            usb-img-dl $1 -b Rm $ramloader $ps
             exit;
         else
             printRed "Please check parameter input.";
@@ -88,12 +88,12 @@ case $4 in
     "-b")
         boot=$boot$evb$wvga
         printGreen "Burn boot:"$boot
-        usb-img-dl $1 -b BmR $boot $ps $ramloader
+        usb-img-dl $1 -b B $boot
         ;;
     "-s")
         system=$system$evb$wvga
         printGreen "Burn system:"$system
-        usb-img-dl $1 -b smR $system $ps $ramloader
+        usb-img-dl $1 -b s $system
         ;;
     "-a")
         printGreen "Burn all at once."
@@ -102,6 +102,6 @@ case $4 in
         system=$system$evb$wvga
         recovery=$recovery$evb$wvga
         usb-img-dl $1 -A
-        usb-img-dl $1 -b bBrsmR $barebox $boot $recovery $system $ps $ramloader
+        usb-img-dl $1 -b RbBrsm $ramloader $barebox $boot $recovery $system $ps
         ;;
 esac

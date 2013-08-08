@@ -54,7 +54,6 @@ elif [ "$3" = "-w" ] ; then
 fi
 
 board=$version$lcd
-lunch
 export PATH=$drod_froyo$tools:$PATH
 $crash_dir/stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
 #restore OLD_PATH
