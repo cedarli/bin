@@ -14,6 +14,12 @@ lcd=""
 #add colors print for linux shell
 . $HOME/.$USER/bin/utils/io/colors/Print
 
+if [ $# -eq 1 ] ; then
+    if [ "$1" = "-t" ] ; then
+        vim $crash_dir/crash.txt
+    fi
+fi
+
 if [ $# -ne 3 ] ; then
     printRed "please check you parameter.";
     printRed "-1 BSP12 or -2 BSP13.";
