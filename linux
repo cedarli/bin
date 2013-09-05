@@ -1,5 +1,5 @@
-#! /bin/sh
-. utils/io/colors/Print
+#! /bin/bash
+. $HOME/.$USER/bin/utils/io/colors/Print
 dir=$HOME/.$USER/local/linux
 if [ -d "$dir" ] ; then
     cd $dir

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #configuration ics enviroment parameter 
 drod=/home/cedar/workspace/src/ICS/src
 drod_framworks=$drod/frameworks/base
@@ -6,7 +6,7 @@ oprofile=$drod/external/oprofile
 agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
 
 #clear old PATH
-export PATH=$CEDAR_LOGIN
+export PATH=${CEDAR_LOGIN:-`$PATH`}
 #setup enviroment jdk 1.6.0.38
 if [ -f "/$HOME/.$USER/local/java/bin/jdk1.6038" ] ; then
     source /$HOME/.$USER/local/java/bin/jdk1.6038

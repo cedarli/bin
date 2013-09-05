@@ -86,6 +86,11 @@ fi
 
 case $4 in
     "-b")
+        barebox=$barebox$evb$wvga$barebox_vn
+        printGreen "Burn boot:"$barebox
+        usb-img-dl $1 -b b $barebox
+        ;;
+    "-B")
         boot=$boot$evb$wvga
         printGreen "Burn boot:"$boot
         usb-img-dl $1 -b B $boot
