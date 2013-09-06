@@ -17,8 +17,7 @@ lcd=""
 if [ $# -eq 1 ] ; then
     if [ "$1" = "-t" ] ; then
         vim $crash_dir/crash.txt
-    else
-        return;
+        exit;
     fi
 fi
 
@@ -27,42 +26,42 @@ if [ $# -ne 3 ] ; then
     printRed "-1 BSP12 or -2 BSP13.";
     printRed "-3 V3 or -4 V4.";
     printRed "-h hvga or -w wvga.";
-    return;
-fi
-#change directory to crash directory
-if [ -d "$crash_dir" ] ; then
-    cd $crash_dir
 else
-    printRed "Can not find directory $crash_dir"
-fi
+    #change directory to crash directory
+    if [ -d "$crash_dir" ] ; then
+        cd $crash_dir
+    else
+        printRed "Can not find directory $crash_dir"
+    fi
 
-#analysis crash.txt using stack script
-if [ "$1" = "-2" ] ; then
-    printGreen "crash analysis ICS"
-    cd $drod_ics
-    source build/envsetup_infomax.sh
-elif [ "$1" = "-1" ] ; then
-    printGreen "crash analysis Froyo"
-    cd $drod_froyo
-    source build/envsetup.sh
-fi
+    #analysis crash.txt using stack script
+    if [ "$1" = "-2" ] ; then
+        printGreen "crash analysis ICS"
+        cd $drod_ics
+        source build/envsetup_infomax.sh
+    elif [ "$1" = "-1" ] ; then
+        printGreen "crash analysis Froyo"
+        cd $drod_froyo
+        source build/envsetup.sh
+    fi
 
-#configuration v3 board or v4 board.
-if [ "$2" = "-3" ] ; then
-    version="iM98xx_evb_v3"
-elif [ "$2" = "-4" ] ; then
-    version="iM98xx_evb_v4"
-fi
+    #configuration v3 board or v4 board.
+    if [ "$2" = "-3" ] ; then
+        version="iM98xx_evb_v3"
+    elif [ "$2" = "-4" ] ; then
+        version="iM98xx_evb_v4"
+    fi
 
-#configuration hvga or wvga.
-if [ "$3" = "-h" ] ; then
-    lcd=""
-elif [ "$3" = "-w" ] ; then
-    lcd="_wvga"
-fi
+    #configuration hvga or wvga.
+    if [ "$3" = "-h" ] ; then
+        lcd=""
+    elif [ "$3" = "-w" ] ; then
+        lcd="_wvga"
+    fi
 
-board=$version$lcd
-export PATH=$drod_froyo$tools:$PATH
-$crash_dir/stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
+    board=$version$lcd
+    export PATH=$drod_froyo$tools:$PATH
+    $crash_dir/stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
+fi
 #restore OLD_PATH
 export PATH=$OLD_PATH

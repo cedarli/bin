@@ -1,11 +1,9 @@
 #! /bin/sh
-filename=temp.log
 if [ $#==2 ] ; then
     filename=$1
+else
+    filename=`date "+%Y%m%d%H%M%S"`".log"
 fi
-
-if [ -f $filename ] ; then
-    rm -f $filename
-fi
+echo $filename
 #startup minocom with -m -C 
 minicom --attrib=on -mzC $filename
