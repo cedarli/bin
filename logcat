@@ -1,9 +1,9 @@
 #! /bin/sh
-if [ $#==2 ] ; then
-    filename=$1
+if [ $# -eq 1 ] ; then
+    filename=`date "+%Y%m%d%H%M%S"`_$1".log"
 else
-    filename=`date "+%Y%m%d%H%M%S"`".log"
+    echo "Please log name...."
+    return;
 fi
-echo $filename
 #startup minocom with -m -C 
 minicom --attrib=on -mzC $filename
