@@ -1,8 +1,34 @@
-#! /bin/sh
-dir=$HOME/workspace/doc/android
-if [ -d "$dir" ] ; then
-    cd $dir
+#!/bin/sh
+#configuration jelly enviroment parameter 
+drod=/home/cedar/workspace/src/Android/src
+drod_framworks=$drod/frameworks/base
+oprofile=$drod/external/oprofile
+agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
+
+#clear old PATH
+export PATH=$CEDAR_LOGIN
+#setup enviroment jdk 1.6.0.38
+if [ -f /$HOME/.$USER/local/java/bin/jdk1.6038 ] ; then
+    source /$HOME/.$USER/local/java/bin/jdk1.6038
+fi
+if [ -d "$drod" ] ; then
+    cd "$drod"
+    source build/envsetup.sh
 else
-    echo "Can not find directory $dir"
+    echo "Can not find dirtory $drod"
+fi
+
+# add now enviroment oprofile and so on
+export  PATH=$oprofile:$PATH
+export  PATH=$agcc:$PATH
+# change dirtory to frameworks
+if [ $# == 1 ];then
+    if [ $1 == frameworks ]; then
+        cd $drod
+        source build/envsetup.sh
+        cd $drod_framworks
+    else
+        echo "dirtory is not frameworks please check type error"
+    fi
 fi
 ls

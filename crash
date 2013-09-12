@@ -61,7 +61,7 @@ else
 
     board=$version$lcd
     export PATH=$drod_froyo$tools:$PATH
-    $crash_dir/stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
+    stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
 fi
 #restore OLD_PATH
 export PATH=$OLD_PATH
