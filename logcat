@@ -2,7 +2,7 @@
 if [ $# -eq 1 ] ; then
     filename=`date "+%Y%m%d%H%M%S"`_$1".log"
 else
-    echo "Please log name...."
+    echo "Please input log name...."
     return;
 fi
 #startup minocom with -m -C 

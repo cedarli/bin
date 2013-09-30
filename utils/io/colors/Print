@@ -1,42 +1,119 @@
 #!/bin/bash
-blackBegin='\033[0;30;1m'
-redBegin='\033[0;31;1m'
-greenBegin='\033[0;32;1m'
-yellowBegin='\033[0;33;1m'
-blueBegin='\033[0;34;1m'
-violetBegin='\033[0;35;1m'
-darkgreenBegin='\033[0;36;1m'
-whiteBegin='\033[0;37;1m'
-End='\033[0m'
 
+#
+#REGULAR Retular Colors
+#BOLD Bold Colors
+#UNDERLINE Underline colors
+#BACKGROUND Background colors
+#HIGHINTENSTY High Intensty colors
+#BOLDHIGHINTENSTY Bold High Intensty'
+#HIGHINTENSTYBACKGROUND High Intensty Background
+#
+#add colors
+. /home/cedar/.cedar/bin/utils/io/colors/colors
 function printBlack(){
-    echo -e $blackBegin$1$End;
+    if [ $# -eq 2 ] ; then
+        printStr $Black "$1" $2;
+    else
+        printStr $Black "$1";
+    fi
 }
 
 function printRed(){
-    echo -e $redBegin$1$End;
+    if [ $# -eq 2 ];then
+        printStr $Red "$1" $2;
+    else
+        printStr $Red "$1"
+    fi
 }
 
 function printGreen(){
-    echo -e $greenBegin$1$End;
+    if [ $# -eq 2 ];then
+        printStr  $Green "$1" $2;
+    else
+        printStr $Green "$1";
+    fi
 }
 
-function printyellow(){
-    echo -e $yellowBegin$1$End;
+function printYellow(){
+    if [ $# -eq 2 ];then
+        printStr $Yellow "$1" $2;
+    else
+        printStr $Yellow "$1";
+    fi
 }
 
 function printBlue(){
-    echo -e $blueBegin$1$End;
+    if [ $3 -eq 2 ];then
+        printStr $Blue "$1" $2;
+    else
+        printStr $Blue "$1";
+    fi
 }
 
-function printViolet(){
-    echo -e $violetBegin$1$End;
+function printCyan(){
+    if [ $# -eq 2 ];then
+        printStr $Cyan "$1" $2;
+    else
+        printStr $Cyan "$1";
+    fi
 }
 
-function printDarkgreen(){
-    echo -e $darkgreenBegin$1$End;
+function printPurple(){
+    if [ $# -eq 2 ];then
+        printStr $Purple "$1" $2;
+    else
+        printStr $purple "$1";
+    fi
 }
 
 function printWhite(){
-    echo -e $whiteBegin$1$End;
+    if [ $# -eq 2 ];then
+        printStr $White "$1" $2;
+    else
+        printStr $White "$1"
+    fi
+}
+
+function printStr(){
+    if [ $# -eq 3 ] ;then
+        case $3 in
+            $retular)
+                echo -e ${REGULAR[$1]}$2$Off;
+                ;;
+            $bold)
+                echo -e ${BOLD[$1]}$2$Off;
+                ;;
+            $underline)
+                echo -e ${UNDERLINE[$1]}$2$Off;
+                ;;
+            $background)
+                echo -e ${BACKGROUND[$1]}$2$Off;
+                ;;
+            $highintensty)
+                echo -e ${HIGHINTENSTY[$1]}$2$Off;
+                ;;
+            $boldhighintensty)
+                echo -e ${BOLDHIGHINTENSTY[$1]}$2$Off;
+                ;;
+            $highintenstybackground)
+                echo -e ${HIGHINTENSTYBACKGROUND[$1]}$2$Off;
+                ;;
+            *)
+                echo -e ${REGULAR[$1]}$2$Off;
+                ;;
+        esac
+    else
+        echo -e ${REGULAR[$1]}$2$Off;
+    fi
+}
+
+function test(){
+    printBlack "Black"
+    printRed "Red"
+    printGreen "Green"
+    printYellow "Yellow"
+    printCyan "Cyan"
+    printPurple "purple"
+    printWhite "White"
 }

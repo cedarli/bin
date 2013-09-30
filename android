@@ -22,7 +22,7 @@ fi
 export  PATH=$oprofile:$PATH
 export  PATH=$agcc:$PATH
 # change dirtory to frameworks
-if [ $# == 1 ];then
+if [ $# -eq 1 ];then
     if [ $1 == frameworks ]; then
         cd $drod
         source build/envsetup.sh
