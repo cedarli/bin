@@ -12,7 +12,14 @@ if [ -f $HOME/.$USER/local/java/bin/jdk1.5022 ] ; then
 fi
 if [ -d "$drod" ] ; then
     cd "$drod"
-    source build/envsetup.sh
+    if [ -f build/envsetup.sh ] ; then
+        source build/envsetup.sh
+    else
+        echo "Can't find file build/envsetup.sh"
+        for file in `ls build/envsetup*`;do
+            source $file;
+        done
+    fi
 else
     echo "Can not find directory $drod"
 fi
