@@ -15,102 +15,138 @@ wvga=_;
 
 . $HOME/.$USER/bin/utils/io/colors/Print
 
-if [ $# -eq 0 ];then
-    printRed "Not download please check."
-    exit;
-fi
-
-#select partation for BSP12 or BSP13
-if [ $1 = "-1" ] || [ $1 = "-2" ] ;then
-    if [ $1 = "-2" ] ;then
-        image=$src/"ICS"/$infomax_images
-        cd $image
-    else
-        image=$src/"Froyo"/$infomax_images
-        cd $image
-    fi
-else
-    printRed "partation error please check."
-    exit;
-fi
-
-if [ $# -eq 2 ] ;then
-    if [ $2 = "-e" ] ;then
-        printRed "Erase user data.";
-        usb-img-dl $1 -e u;
-    else if [ $2 = "-A" ] ;then
-            printGreen "Erase all image";
-            usb-img-dl $1 -A;
-            usb-img-dl $1 -b Rm $ramloader $ps
-            exit;
-        else
-            printRed "Please check parameter input.";
-            printRed ">>BSP12 -1 or BSP13 -2";
-            printRed ">>'-e' for erase user data.";
-    fi
-    fi
-    exit;
-fi
-if [ $# -ne 4 ] ;then
+function Usage(){
     printRed "Please check parameter input.";
     printRed "BSP12 -1 or BSP13 -2.";
     printRed "evbv3 -3 or evbv4 -4.";
     printRed "wvga -w or hvga -h.";
     printRed "boot -b system -s all -a.";
     exit;
-fi
+}
+
+#select partation for BSP12.
+function BSP12Partation(){
+    image=$src/"Froyo"/$infomax_images
+    cd $image
+}
+function BSP13Partation(){
+    image=$src/"ICS"/$infomax_images
+    cd $image
+}
+
 #select evb version
-if [ $2 = "-3" ] || [ $2 = "-4" ] ;then
-    if [ $2 = "-3" ] ;then
-        printGreen "Burn v3 image at once."
-        evb='v3'
-        barebox_vn=$barebox_v3
-    else
-        printGreen "Burn v4 image at once."
-        evb='v4'
-        barebox_vn=$barebox_v4
-    fi
-else
-    printRed "evb version error please check."
+function evb3(){
+    printGreen "Burn evb version 3 image at once"
+    evb='v3'
+    barebox_vn=$barebox_v3
+}
+function evb4(){
+    printGreen "Burn evb version 4 image at once"
+    evb='v4'
+    barebox_vn=$barebox_v4
+}
+
+#screen size
+function hvga(){
+    printGreen "Burn hvga image"
+    wvga=""
+}
+function wvga(){
+    wvga=$wvga'wvga'
+}
+
+
+function BurnBarebox(){
+    barebox=$barebox$evb$wvga$barebox_vn
+    printGreen "Burn boot:"$barebox
+    usb-img-dl $1 -b b $barebox
+}
+function BurnBoot(){
+    boot=$boot$evb$wvga
+    printGreen "Burn boot:"$boot
+    usb-img-dl $1 -b B $boot
+}
+function BurnSystem(){
+    system=$system$evb$wvga
+    printGreen "Burn system:"$system
+    usb-img-dl $1 -b s $system
+}
+
+function BurnAll(){
+    printGreen "Burn all at once."
+    barebox=$barebox$evb$wvga$barebox_vn
+    boot=$boot$evb$wvga
+    system=$system$evb$wvga
+    recovery=$recovery$evb$wvga
+    usb-img-dl $1 -A
+    usb-img-dl $1 -b RbBrsm $ramloader $barebox $boot $recovery $system $ps
+}
+
+function EraseUserData(){
+    usb-img-dl $1 -e u;
     exit;
-fi
+}
 
-#select image wvga or hvga.
-if [ $3 = "-w" ] || [ $3 = "-h" ] ;then
-    if [ $3 = "-w" ] ;then
-        printGreen "Burn wvga image."
-        wvga=$wvga'wvga'
-    else
-        printGreen "Burn hvga image."
-        wvga=""
-    fi
-else
-    printGreen "select image error please check."
-fi
+function EraseAll(){
+    usb-img-dl $1 -A;
+    usb-img-dl $1 Rm $ramloader $ps;
+    exit;
+}
 
-case $4 in
-    "-b")
-        barebox=$barebox$evb$wvga$barebox_vn
-        printGreen "Burn boot:"$barebox
-        usb-img-dl $1 -b b $barebox
+case $# in
+    '2')
+        printRed "Eraseing";
         ;;
-    "-B")
-        boot=$boot$evb$wvga
-        printGreen "Burn boot:"$boot
-        usb-img-dl $1 -b B $boot
+    '4')
+        printGreen "Startup burn image";
         ;;
-    "-s")
-        system=$system$evb$wvga
-        printGreen "Burn system:"$system
-        usb-img-dl $1 -b s $system
-        ;;
-    "-a")
-        printGreen "Burn all at once."
-        barebox=$barebox$evb$wvga$barebox_vn
-        boot=$boot$evb$wvga
-        system=$system$evb$wvga
-        recovery=$recovery$evb$wvga
-        usb-img-dl $1 -A
-        usb-img-dl $1 -b RbBrsm $ramloader $barebox $boot $recovery $system $ps
+    *)
+        Usage;
         ;;
 esac
+
+while getopts "1234hwbBsaeA" option
+do
+    case $option in
+        1)
+            BSP12Partation;
+            ;;
+        2)
+            BSP13Partation;
+            ;;
+        3)
+            evb3;
+            ;;
+        4)
+            evb4;
+            ;;
+        h)
+            hvga;
+            ;;
+        w)
+            wvga;
+            ;;
+
+        b)
+            BurnBarebox $1;
+            ;;
+        B)
+            BurnBoot $1;
+            ;;
+        s)
+            BurnSystem $1;
+            ;;
+        a)
+            BurnAll $1;
+            ;;
+        e)
+            EraseUserData $1;
+            ;;
+        A)
+            EraseAll $1;
+            ;;
+        *)
+            Usage;
+            ;;
+    esac
+done
