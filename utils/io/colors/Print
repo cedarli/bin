@@ -108,7 +108,7 @@ function printStr(){
     fi
 }
 
-function test(){
+function testprint(){
     printBlack "Black"
     printRed "Red"
     printGreen "Green"
