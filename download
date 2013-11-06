@@ -36,19 +36,16 @@ function BSP13Partation(){
 
 #select evb version
 function evb3(){
-    printGreen "Burn evb version 3 image at once"
     evb='v3'
     barebox_vn=$barebox_v3
 }
 function evb4(){
-    printGreen "Burn evb version 4 image at once"
     evb='v4'
     barebox_vn=$barebox_v4
 }
 
 #screen size
 function hvga(){
-    printGreen "Burn hvga image"
     wvga=""
 }
 function wvga(){
@@ -58,7 +55,7 @@ function wvga(){
 
 function BurnBarebox(){
     barebox=$barebox$evb$wvga$barebox_vn
-    printGreen "Burn boot:"$barebox
+    printGreen "Burn barebox:"$barebox
     usb-img-dl $1 -b b $barebox
 }
 function BurnBoot(){
@@ -73,11 +70,16 @@ function BurnSystem(){
 }
 
 function BurnAll(){
-    printGreen "Burn all at once."
     barebox=$barebox$evb$wvga$barebox_vn
     boot=$boot$evb$wvga
     system=$system$evb$wvga
     recovery=$recovery$evb$wvga
+    printGreen "Ramloader:"$ramloader
+    printGreen "Barebox:"$barebox
+    printGreen "Boot:"$boot
+    printGreen "Recovery:"$recovery
+    printGreen "System:"$system
+    printGreen "Ps:"$ps
     usb-img-dl $1 -A
     usb-img-dl $1 -b RbBrsm $ramloader $barebox $boot $recovery $system $ps
 }
@@ -96,57 +98,64 @@ function EraseAll(){
 case $# in
     '2')
         printRed "Eraseing";
+        while getopts "eA" option
+        do
+            case $option in
+                e)
+                    EraseUserData $1;
+                    ;;
+                A)
+                    EraseAll $1;
+                    ;;
+                *)
+                    Usage;
+                    ;;
+            esac
+        done
         ;;
     '4')
         printGreen "Startup burn image";
+        while getopts "1234hwbBsa" option
+        do
+            case $option in
+            1)
+                BSP12Partation;
+                ;;
+            2)
+                BSP13Partation;
+                ;;
+            3)
+                evb3;
+                ;;
+            4)
+                evb4;
+                ;;
+            h)
+                hvga;
+                ;;
+            w)
+                wvga;
+                ;;
+
+            b)
+                BurnBarebox $1;
+                ;;
+            B)
+                BurnBoot $1;
+                ;;
+            s)
+                BurnSystem $1;
+                ;;
+            a)
+                BurnAll $1;
+                ;;
+            *)
+                Usage;
+                ;;
+            esac
+        done
         ;;
     *)
         Usage;
         ;;
 esac
-
-while getopts "1234hwbBsaeA" option
-do
-    case $option in
-        1)
-            BSP12Partation;
-            ;;
-        2)
-            BSP13Partation;
-            ;;
-        3)
-            evb3;
-            ;;
-        4)
-            evb4;
-            ;;
-        h)
-            hvga;
-            ;;
-        w)
-            wvga;
-            ;;
-
-        b)
-            BurnBarebox $1;
-            ;;
-        B)
-            BurnBoot $1;
-            ;;
-        s)
-            BurnSystem $1;
-            ;;
-        a)
-            BurnAll $1;
-            ;;
-        e)
-            EraseUserData $1;
-            ;;
-        A)
-            EraseAll $1;
-            ;;
-        *)
-            Usage;
-            ;;
-    esac
-done
