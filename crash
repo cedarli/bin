@@ -79,9 +79,6 @@ do
     esac
 done
 
-
-
-
 board=$version$lcd
 export PATH=$drod_froyo$tools:$PATH
 stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
