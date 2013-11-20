@@ -14,54 +14,76 @@ lcd=""
 #add colors print for linux shell
 . $HOME/.$USER/bin/utils/io/colors/Print
 
-if [ $# -eq 1 ] ; then
-    if [ "$1" = "-t" ] ; then
-        vim $crash_dir/crash.txt
-        exit;
-    fi
-fi
-
-if [ $# -ne 3 ] ; then
+function Usage(){
     printRed "please check you parameter.";
     printRed "-1 BSP12 or -2 BSP13.";
     printRed "-3 V3 or -4 V4.";
     printRed "-h hvga or -w wvga.";
+}
+
+function EditerCrash(){
+    vim $crash_dir/crash.txt
+    exit;
+}
+
+function FroyoCrash(){
+    cd $drod_froyo
+    source build/envsetup.sh;
+}
+
+function ICSCrash(){
+    cd $drod_ics
+    source build/envsetup_infomax.sh
+}
+
+#change directory to crash directory
+if [ -d "$crash_dir" ] ; then
+    cd $crash_dir
 else
-    #change directory to crash directory
-    if [ -d "$crash_dir" ] ; then
-        cd $crash_dir
-    else
-        printRed "Can not find directory $crash_dir"
-    fi
-
-    #analysis crash.txt using stack script
-    if [ "$1" = "-2" ] ; then
-        printGreen "crash analysis ICS"
-        cd $drod_ics
-        source build/envsetup_infomax.sh
-    elif [ "$1" = "-1" ] ; then
-        printGreen "crash analysis Froyo"
-        cd $drod_froyo
-        source build/envsetup.sh
-    fi
-
-    #configuration v3 board or v4 board.
-    if [ "$2" = "-3" ] ; then
-        version="iM98xx_evb_v3"
-    elif [ "$2" = "-4" ] ; then
-        version="iM98xx_evb_v4"
-    fi
-
-    #configuration hvga or wvga.
-    if [ "$3" = "-h" ] ; then
-        lcd=""
-    elif [ "$3" = "-w" ] ; then
-        lcd="_wvga"
-    fi
-
-    board=$version$lcd
-    export PATH=$drod_froyo$tools:$PATH
-    stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
+    printRed "Can not find directory $crash_dir"
 fi
+
+while getopts "12t34hw" option
+do
+    case $option in
+        1)
+            printGreen "crash analysis Froyo";
+            FroyoCrash;
+            ;;
+        2)
+            printGreen "crash analysis ICS";
+            ICSCrash;
+            ;;
+        3)
+            printGreen "v3 ";
+            version="iM98xx_evb_v3";
+            ;;
+        4)
+            printGreen "v4 ";
+            version="iM98xx_evb_v4";
+            ;;
+        t)
+            EditerCrash;
+            ;;
+        h)
+            printGreen "hvga";
+            lcd="";
+            ;;
+        w)
+            printGreen "wvga";
+            lcd="_wvga";
+            ;;
+        *)
+            Usage;
+            ;;
+    esac
+done
+
+
+
+
+board=$version$lcd
+export PATH=$drod_froyo$tools:$PATH
+stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
 #restore OLD_PATH
 export PATH=$OLD_PATH
