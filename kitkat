@@ -1,26 +1,19 @@
-#!/bin/bash
-#configuration ics enviroment parameter 
-drod=/home/cedar/workspace/src/ICS/src
+#!/bin/sh
+#configuration jelly enviroment parameter 
+drod=/home/cedar/workspace/src/Kitkat/src
 drod_framworks=$drod/frameworks/base
 oprofile=$drod/external/oprofile
 agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
 
 #clear old PATH
-export PATH=${CEDAR_LOGIN:-`$PATH`}
+export PATH=$CEDAR_LOGIN
 #setup enviroment jdk 1.6.0.24
-if [ -f "$HOME/.$USER/local/java/bin/jdk1.6024" ] ; then
-    source $HOME/.$USER/local/java/bin/jdk1.6024
+if [ -f /$HOME/.$USER/local/java/bin/jdk1.6024 ] ; then
+    source /$HOME/.$USER/local/java/bin/jdk1.6024
 fi
 if [ -d "$drod" ] ; then
     cd "$drod"
-    if [ -f build/envsetup_infomax.sh ] ; then
-        source build/envsetup_infomax.sh
-    else
-        echo "Cann't find file build/envsetup_infomax.sh"
-        for file in `ls build/envsetup*` ; do
-            source $file;
-        done
-    fi
+    source build/envsetup.sh
 else
     echo "Can not find dirtory $drod"
 fi
@@ -32,9 +25,10 @@ export  PATH=$agcc:$PATH
 if [ $# -eq 1 ];then
     if [ $1 == frameworks ]; then
         cd $drod
-        source build/envsetup_infomax.sh
+        source build/envsetup.sh
         cd $drod_framworks
     else
         echo "dirtory is not frameworks please check type error"
     fi
 fi
+ls
