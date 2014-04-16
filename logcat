@@ -6,4 +6,4 @@ else
     return;
 fi
 #startup minocom with -m -C 
-minicom --attrib=on -mzC $filename
+minicom -c on --attrib=on -mzC $filename
