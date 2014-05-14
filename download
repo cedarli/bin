@@ -5,13 +5,11 @@ boot=boot.img_iM98xx_evb_
 system=system.img_iM98xx_evb_
 barebox=barebox.bin_im98xx
 recovery=recovery.img_iM98xx_evb_
-ps=ecos_ps4010_release.bin
-ramloader='ldr_app_rev56(01.01.09).bin'
 barebox_v3=_A9-624MHz-AHB-div2_XM-198MHz_A7-143MHz
 barebox_v4=_A9-806MHz-AHB-div3_XM-198MHz_A7-130MHz
 barebox_vn="";
 evb="";
-wvga=_;
+screen=_;
 
 . $HOME/.$USER/bin/utils/io/colors/Print
 
@@ -24,12 +22,20 @@ function Usage(){
     exit;
 }
 
+function publicData(){
+    cd $HOME/.cedar/local/usb-img-dl/data
+    ps=`ls ecos_ps*`
+    ramloader=`ls ldr*`
+}
+
 #select partation for BSP12.
 function BSP12Partation(){
+    publicData;
     image=$src/"Froyo"/$infomax_images
     cd $image
 }
 function BSP13Partation(){
+    publicData;
     image=$src/"ICS"/$infomax_images
     cd $image
 }
@@ -46,34 +52,34 @@ function evb4(){
 
 #screen size
 function hvga(){
-    wvga=""
+    screen=""
 }
 function wvga(){
-    wvga=$wvga'wvga'
+    screen=$screen'wvga'
 }
 
 
 function BurnBarebox(){
-    barebox=$barebox$evb$wvga$barebox_vn
+    barebox=$barebox$evb$screen$barebox_vn
     printGreen "Burn barebox:"$barebox
     usb-img-dl $1 -b b $barebox
 }
 function BurnBoot(){
-    boot=$boot$evb$wvga
+    boot=$boot$evb$screen
     printGreen "Burn boot:"$boot
     usb-img-dl $1 -b B $boot
 }
 function BurnSystem(){
-    system=$system$evb$wvga
+    system=$system$evb$screen
     printGreen "Burn system:"$system
     usb-img-dl $1 -b s $system
 }
 
 function BurnAll(){
-    barebox=$barebox$evb$wvga$barebox_vn
-    boot=$boot$evb$wvga
-    system=$system$evb$wvga
-    recovery=$recovery$evb$wvga
+    barebox=$barebox$evb$screen$barebox_vn
+    boot=$boot$evb$screen
+    system=$system$evb$screen
+    recovery=$recovery$evb$screen
     printGreen "Ramloader:"$ramloader
     printGreen "Barebox:"$barebox
     printGreen "Boot:"$boot
