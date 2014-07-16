@@ -5,12 +5,13 @@ export PATH=$CEDAR_LOGIN
 #configuration enviroment path for crash
 drod_ics=/home/cedar/workspace/src/ICS/src
 drod_froyo=/home/cedar/workspace/src/Froyo/src
-crash_dir=/home/cedar/.cedar/local/crash
+crash_dir=/home/cedar/crash
 
 tools=/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/
 board=""
 version=""
 lcd=""
+drod_dir=""
 #add colors print for linux shell
 . $HOME/.$USER/bin/utils/io/colors/Print
 
@@ -19,6 +20,7 @@ function Usage(){
     printRed "-1 BSP12 or -2 BSP13.";
     printRed "-3 V3 or -4 V4.";
     printRed "-h hvga or -w wvga.";
+    exit;
 }
 
 function EditerCrash(){
@@ -28,12 +30,20 @@ function EditerCrash(){
 
 function FroyoCrash(){
     cd $drod_froyo
+    drod_dir=$drod_froyo
     source build/envsetup.sh;
 }
 
 function ICSCrash(){
     cd $drod_ics
+    drod_dir=$drod_ics
     source build/envsetup_infomax.sh
+}
+
+function executeCrash(){
+    board=$version$lcd
+    export PATH=$drod_dir$tools:$PATH
+    stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
 }
 
 #change directory to crash directory
@@ -68,10 +78,12 @@ do
         h)
             printGreen "hvga";
             lcd="";
+            executeCrash;
             ;;
         w)
             printGreen "wvga";
             lcd="_wvga";
+            executeCrash;
             ;;
         *)
             Usage;
@@ -79,8 +91,6 @@ do
     esac
 done
 
-board=$version$lcd
-export PATH=$drod_froyo$tools:$PATH
-stack --symbols-dir=out/target/product/$board/symbols/ $crash_dir/crash.txt
+
 #restore OLD_PATH
 export PATH=$OLD_PATH
