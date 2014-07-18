@@ -5,6 +5,7 @@ export PATH=$CEDAR_LOGIN
 #configuration enviroment path for crash
 drod_ics=/home/cedar/workspace/src/ICS/src
 drod_froyo=/home/cedar/workspace/src/Froyo/src
+drod_androd=/home/cedar/workspace/src/KitKat/src
 crash_dir=/home/cedar/crash
 
 tools=/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/
@@ -17,9 +18,9 @@ drod_dir=""
 
 function Usage(){
     printRed "please check you parameter.";
-    printRed "-1 BSP12 or -2 BSP13.";
-    printRed "-3 V3 or -4 V4.";
-    printRed "-h hvga or -w wvga.";
+    printRed "-1 BSP12 or -2 BSP13 -d Android.";
+    printRed "-3 V3 or -4 V4 or -g generic.";
+    printRed "-h hvga or -w wvga -a Android.";
     exit;
 }
 
@@ -40,6 +41,12 @@ function ICSCrash(){
     source build/envsetup_infomax.sh
 }
 
+function Androidcrash(){
+    cd $drod_androd
+    drod_dir=$drod_androd
+    source build/envsetup.sh
+}
+
 function executeCrash(){
     board=$version$lcd
     export PATH=$drod_dir$tools:$PATH
@@ -53,7 +60,7 @@ else
     printRed "Can not find directory $crash_dir"
 fi
 
-while getopts "12t34hw" option
+while getopts "12dt34ghwa" option
 do
     case $option in
         1)
@@ -64,6 +71,10 @@ do
             printGreen "crash analysis ICS";
             ICSCrash;
             ;;
+        d)
+            printGreen "crash analysis Android generic";
+            Androidcrash;
+            ;;
         3)
             printGreen "v3 ";
             version="iM98xx_evb_v3";
@@ -71,6 +82,10 @@ do
         4)
             printGreen "v4 ";
             version="iM98xx_evb_v4";
+            ;;
+        g)
+            printGreen "generic ";
+            version="generic";
             ;;
         t)
             EditerCrash;
@@ -83,6 +98,11 @@ do
         w)
             printGreen "wvga";
             lcd="_wvga";
+            executeCrash;
+            ;;
+        a)
+            printGreen "android";
+            lcd="";
             executeCrash;
             ;;
         *)
