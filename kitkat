@@ -3,7 +3,7 @@
 drod=/home/cedar/workspace/src/KitKat/src
 drod_framworks=$drod/frameworks/base
 oprofile=$drod/external/oprofile
-agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
+armtools=$drod/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin
 
 #clear old PATH
 export PATH=$CEDAR_LOGIN
@@ -20,7 +20,7 @@ fi
 
 # add now enviroment oprofile and so on
 export  PATH=$oprofile:$PATH
-export  PATH=$agcc:$PATH
+export  PATH=$armtools:$PATH
 # change dirtory to frameworks
 if [ $# -eq 1 ];then
     if [ $1 == frameworks ]; then

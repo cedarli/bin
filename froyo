@@ -2,7 +2,7 @@
 #configuration absolate path for Froyo enviroment parameter
 drod=$HOME/workspace/src/Froyo/src
 oprofile=$drod/external/oprofile
-agcc=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc
+armtools=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin
 
 #clear old PATH
 export PATH=${CEDAR_LOGIN:-`$PATH`}
@@ -26,4 +26,4 @@ fi
 
 # add new enviroment parameter
 export  PATH=$oprofile:$PATH
-export  PATH=$agcc:$PATH
+export  PATH=$armtools:$PATH
