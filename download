@@ -10,6 +10,7 @@ barebox_v4=_A9-806MHz-AHB-div3_XM-198MHz_A7-130MHz
 barebox_vn="";
 evb="";
 screen=_;
+data_dir=$HOME/.cedar/local/usb-img-dl/data
 
 . $HOME/.$USER/bin/utils/io/colors/Print
 
@@ -23,9 +24,9 @@ function Usage(){
 }
 
 function publicData(){
-    cd $HOME/.cedar/local/usb-img-dl/data
-    ps=`ls ecos_ps*`
-    ramloader=`ls ldr*`
+    cd $data_dir
+    ps=$data_dir/`ls ecos_ps*`
+    ramloader=$data_dir/`ls ldr*`
 }
 
 #select partation for BSP12.
