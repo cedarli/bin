@@ -33,7 +33,7 @@ use strict;
 # Dance around to find the actual android toolchain path (it's very
 # deep, so links on $PATH are going to be common.
 #my $GCC = `which arm-eabi-gcc`;
-my $DROID = "/home/cedar/workspace/src/Froyo/src";
+my $DROID = "/home/cedar/ws/src/Froyo/src";
 my $GCC = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin/arm-eabi-gcc";
 $GCC = qx(cd `dirname $GCC`; /bin/pwd);
 chomp $GCC;

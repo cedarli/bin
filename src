@@ -1,5 +1,5 @@
 #! /bin/sh
-dir=$HOME/workspace/src/infomax
+dir=$HOME/ws/src/infomax
 if [ -d "$dir" ] ; then
     cd $dir
 else

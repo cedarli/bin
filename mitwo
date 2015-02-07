@@ -1,6 +1,6 @@
 #!/bin/sh
 #configuration jelly enviroment parameter
-drod=/home/cedar/workspace/src/XiaoMi/src
+drod=/home/cedar/ws/src/XiaoMi/src
 drod_framworks=$drod/frameworks/base
 oprofile=$drod/external/oprofile
 armtools=$drod/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin

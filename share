@@ -1,5 +1,5 @@
 #! /bin/sh
-dir=/home/cedar/workspace/doc/share
+dir=/home/cedar/ws/doc/share
 if [ -d "$dir" ] ; then
     cd $dir
     clear

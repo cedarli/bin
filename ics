@@ -1,6 +1,6 @@
 #!/bin/bash
 #configuration ics enviroment parameter 
-drod=/home/cedar/workspace/src/ICS/src
+drod=/home/cedar/ws/src/ICS/src
 drod_framworks=$drod/frameworks/base
 oprofile=$drod/external/oprofile
 armtools=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin

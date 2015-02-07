@@ -1,5 +1,5 @@
 #! /bin/sh
-dir=$HOME/workspace/doc/android/android/apk
+dir=$HOME/ws/doc/android/android/apk
 if [ -d "$dir" ] ; then
     cd $dir
 else

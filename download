@@ -1,5 +1,5 @@
 #!/bin/bash
-src=/home/cedar/workspace/src
+src=/home/cedar/ws/src
 infomax_images=/src/infomax_images
 boot=boot.img_iM98xx_evb_
 system=system.img_iM98xx_evb_

@@ -1,6 +1,6 @@
 #!/bin/sh
 #configuration absolate path for Froyo enviroment parameter
-drod=$HOME/workspace/src/Froyo/src
+drod=$HOME/ws/src/Froyo/src
 oprofile=$drod/external/oprofile
 armtools=$drod/prebuilt/linux-x86/toolchain/arm-eabi-4.2.1/bin
 
