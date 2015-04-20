@@ -1,13 +1,7 @@
 #! /bin/sh
 dir=$HOME/ws/doc/android
 if [ $# = 1 ] ; then
-    if [ $1 = "ics" ] ; then 
-        dir=$dir/$1/bug
-    else
-        if [ $1="froyo" ] ; then
-            dir=$dir/$1/bug
-        fi
-    fi
+    dir=$dir/$1/bug
 fi
 if [ -d "$dir" ] ; then
     cd $dir
