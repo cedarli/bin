@@ -5,6 +5,7 @@ export PATH=$CEDAR_LOGIN
 #configuration enviroment path for crash
 drod_ics=/home/cedar/ws/src/ICS/src
 drod_froyo=/home/cedar/ws/src/Froyo/src
+drod_kitkat=/home/cedar/ws/src/KitKat/src
 drod_androd=/home/cedar/ws/src/KitKat/src
 crash_dir=/home/cedar/crash
 
@@ -18,8 +19,8 @@ drod_dir=""
 
 function Usage(){
     printRed "please check you parameter.";
-    printRed "-1 BSP12 or -2 BSP13 -d Android.";
-    printRed "-3 V3 or -4 V4 or -g generic.";
+    printRed "-1 BSP12 or -2 BSP13 -5 Kitkat-d Android.";
+    printRed "-3 V3 or -4 V4 or -g generici -6 512M -7 1G.";
     printRed "-h hvga or -w wvga -a Android.";
     exit;
 }
@@ -41,6 +42,12 @@ function ICSCrash(){
     source build/envsetup_infomax.sh
 }
 
+function KitkatCrash(){
+    cd $drod_kitkat
+    drod_dir=$drod_kitkat
+    source build/envsetup.sh
+}
+
 function Androidcrash(){
     cd $drod_androd
     drod_dir=$drod_androd
@@ -60,7 +67,7 @@ else
     printRed "Can not find directory $crash_dir"
 fi
 
-while getopts "12dt34ghwa" option
+while getopts "12dt34567ghwa" option
 do
     case $option in
         1)
@@ -82,6 +89,18 @@ do
         4)
             printGreen "v4 ";
             version="iM98xx_evb_v4";
+            ;;
+        5)
+            printGreen "crash analysis Kitkat ";
+            KitkatCrash; 
+            ;;
+        6)
+            printGreen "512M";
+            version="iM9868_evb_v1_512MB";
+            ;;
+        7)
+            printGreen "1G ";
+            version="iM9868_evb_v1_1G";
             ;;
         g)
             printGreen "generic ";
