@@ -1,1 +1,1 @@
-/home/cedar/.cedar/local/adt_bundle_linux/sdk/platform-tools/aidl
+/home/cedar/.cedar/local/adt/sdk/platform-tools/aidl
