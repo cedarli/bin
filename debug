@@ -1,8 +1,5 @@
 #! /bin/sh
-dir=$HOME/ws/doc/android
-if [ $# = 1 ] ; then
-    dir=$dir/$1/bug
-fi
+dir=$HOME/ws/doc/debug
 if [ -d "$dir" ] ; then
     cd $dir
 else

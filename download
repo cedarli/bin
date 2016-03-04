@@ -1,6 +1,6 @@
 #!/bin/bash
 src=/home/cedar/ws/src
-infomax_images=/src/infomax_images
+infomax_images=src/infomax_images
 boot=boot.img_iM98xx_evb_
 system=system.img_iM98xx_evb_
 barebox=barebox.bin_im98xx

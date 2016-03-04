@@ -1,17 +1,13 @@
 #!/bin/bash
 #configuration ics enviroment parameter 
-drod=$HOME/ws/src/ICS/src
+root_dir=/home/cedar/ws/src/zephyr/src
 
 #clear old PATH
 export PATH=${CEDAR_LOGIN:-`$PATH`}
-#setup enviroment jdk1.6
-if [ -f $HOME/.$USER/local/java/bin/jdk1.6 ] ; then
-    source $HOME/.$USER/local/java/bin/jdk1.6
-fi
-if [ -d "$drod" ] ; then
-    cd "$drod"
-    if [ -f build/envsetup_infomax.sh ] ; then
-        source build/envsetup_infomax.sh
+if [ -d "$root_dir" ] ; then
+    cd "$root_dir"
+    if [ -f zephyr-env.sh ] ; then
+        source zephyr-env.sh
     else
         echo "Cann't find file build/envsetup_infomax.sh"
         for file in `ls build/envsetup*` ; do
@@ -21,3 +17,6 @@ if [ -d "$drod" ] ; then
 else
     echo "Can not find dirtory $drod"
 fi
+
+export ZEPHYR_GCC_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk

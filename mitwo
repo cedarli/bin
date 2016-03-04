@@ -1,9 +1,7 @@
 #!/bin/sh
 #configuration jelly enviroment parameter
-drod=/home/cedar/ws/src/XiaoMi/src
+drod=$HOME/ws/src/XiaoMi/src
 drod_framworks=$drod/frameworks/base
-oprofile=$drod/external/oprofile
-armtools=$drod/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin
 
 #clear old PATH
 export PATH=$CEDAR_LOGIN
@@ -17,18 +15,3 @@ if [ -d "$drod" ] ; then
 else
     echo "Can not find dirtory $drod"
 fi
-
-# add now enviroment oprofile and so on
-export  PATH=$oprofile:$PATH
-export  PATH=$armtools:$PATH
-# change dirtory to frameworks
-if [ $# -eq 1 ];then
-    if [ $1 == frameworks ]; then
-        cd $drod
-        source build/envsetup.sh
-        cd $drod_framworks
-    else
-        echo "dirtory is not frameworks please check type error"
-    fi
-fi
-ls

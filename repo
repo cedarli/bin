@@ -3,7 +3,8 @@
 ## repo default configuration
 ##
 #REPO_URL = 'https://gerrit.googlesource.com/git-repo'
-REPO_URL = 'gitosis@172.31.39.8:/tools/repo.git'
+#REPO_URL = 'gitosis@172.31.39.8:/tools/repo.git'
+REPO_URL = 'ssh://gitolite@172.31.39.20/tools/repo'
 REPO_REV = 'stable'
 
 # Copyright (C) 2008 Google Inc.

@@ -1,6 +1,6 @@
 #!/bin/bash
 #configuration ics enviroment parameter 
-drod=$HOME/ws/src/ICS/src
+drod=$HOME/ws/src/im381/src
 
 #clear old PATH
 export PATH=${CEDAR_LOGIN:-`$PATH`}
@@ -10,8 +10,8 @@ if [ -f $HOME/.$USER/local/java/bin/jdk1.6 ] ; then
 fi
 if [ -d "$drod" ] ; then
     cd "$drod"
-    if [ -f build/envsetup_infomax.sh ] ; then
-        source build/envsetup_infomax.sh
+    if [ -f build/envsetup.sh ] ; then
+        source build/envsetup.sh
     else
         echo "Cann't find file build/envsetup_infomax.sh"
         for file in `ls build/envsetup*` ; do

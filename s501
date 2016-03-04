@@ -1,0 +1,18 @@
+#!/bin/sh
+#configuration jelly enviroment parameter 
+drod=$HOME/ws/src/s501/src
+
+#clear old PATH
+export PATH=$CEDAR_LOGIN
+#setup enviroment jdk1.6
+#if [ -f /$HOME/.$USER/local/java/bin/jdk1.7 ] ; then
+#    source /$HOME/.$USER/local/java/bin/jdk1.7
+#fi
+if [ -d "$drod" ] ; then
+    cd "$drod"
+    #source build/envsetup.sh
+else
+    echo "Can not find dirtory $drod"
+    echo "Create dirtory"
+    mkdir -p $drod
+fi
